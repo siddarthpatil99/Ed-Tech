@@ -87,7 +87,9 @@ export const signIn = async (req, res) => {
       { expiresIn: process.env.JWT_EXPIRY }
     );
 
-    return res.status(200).json({message: "Login success", token, role: existingUser.role});
+    return res
+      .status(200)
+      .json({ message: "Login success", token, role: existingUser.role });
   } catch (error) {
     return res
       .status(500)
@@ -138,6 +140,30 @@ export const updateInfo = async (req, res) => {
     return res
       .status(500)
       .json({ message: "Something went wrong", error: error, success: false });
+  }
+};
+
+export const currentUser = async (req, res) => {
+  const userId = req.userId;
+
+  try {
+    const user = await User.findOne({ _id: userId });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const currentUser = {
+      email: user.email,
+      name: user.name,
+      password: user.password,
+    };
+
+    return res.status(200).json({ currentUser });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Something went wrong", error: error });
   }
 };
 

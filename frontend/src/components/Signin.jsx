@@ -1,8 +1,10 @@
 import axios from "axios";
+import toast from "react-hot-toast";
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { SIGNIN_URL } from "../apiConfig";
 import { UserContext } from "../contexts/UserContext";
+import { IoIosArrowBack } from "react-icons/io";
 
 const Signin = () => {
   // const loggedData = useContext(UserContext);
@@ -27,7 +29,7 @@ const Signin = () => {
     try {
       const response = await axios.post(SIGNIN_URL, formData);
       const { token, role } = response.data;
-
+      toast.success("Signed in successfully");
       localStorage.setItem("lms-token", token);
       setLoggedUser(token);
       console.log(response.data);
@@ -99,6 +101,15 @@ const Signin = () => {
         </form>
         <p className="mt-5">
           Don't have an account? <Link to="/signup">Sign Up</Link>
+        </p>
+        <p className="mt-2">
+          <Link
+            to="/"
+            className="flex items-center text-gray-600 hover:text-black"
+          >
+            <IoIosArrowBack className="mr-1" />
+            Back to Home
+          </Link>
         </p>
       </div>
     </div>

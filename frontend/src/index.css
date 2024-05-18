@@ -70,3 +70,7 @@ button:focus-visible {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.bg-hero-image {
+  background-image: url('');
+}

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { SEND_OTP, VERIFY_OTP, SIGNUP_URL } from "../apiConfig";
 import { useNavigate, Link } from "react-router-dom";
+import { IoIosArrowBack } from "react-icons/io";
 import axios from "axios";
 
 const SignUp = () => {
@@ -90,11 +91,11 @@ const SignUp = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-900">
-      <div className="max-w-md w-full p-8 bg-gray-800 rounded-lg shadow-lg">
+      <div className="max-w-md w-full p-6 bg-gray-800 rounded-lg shadow-lg">
         {/* <h2 className="text-3xl font-semibold mb-6 text-center text-gray-200">
           Sign Up
         </h2> */}
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <input
               type="text"
@@ -182,6 +183,15 @@ const SignUp = () => {
         </form>
         <p className="mt-5 text-white">
           Don't have an account? <Link to="/signin">Sign In</Link>
+        </p>
+        <p className="mt-2">
+          <Link
+            to="/"
+            className="flex items-center text-gray-600 hover:text-white"
+          >
+            <IoIosArrowBack className="mr-1" />
+            Back to Home
+          </Link>
         </p>
       </div>
     </div>

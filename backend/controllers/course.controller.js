@@ -3,7 +3,8 @@ import { courseSchema } from "../zod/course.types.js";
 import { User } from "../models/user.model.js";
 
 export const createCourse = async (req, res) => {
-  const { title, description, category, price } = req.body;
+  const { title, description, category, price, videoUrl, thumbnailUrl } =
+    req.body;
 
   try {
     const instructorName = req.user.name;
@@ -35,6 +36,8 @@ export const createCourse = async (req, res) => {
       instructorName,
       category,
       price,
+      videoUrl,
+      thumbnailUrl
     });
 
     return res.status(201).json({
@@ -51,3 +54,14 @@ export const createCourse = async (req, res) => {
     });
   }
 };
+
+
+export const getCourses = async (req, res) => {
+  try {
+    const courses = await Course.find();
+
+    return res.status(200).json({message: "Course retrieved successfully", courses: courses, success: true});
+  } catch (error) {
+    return res.status(500).json({message: "Failed to retrieve courses", error: error.message, success: false});
+  }
+}
