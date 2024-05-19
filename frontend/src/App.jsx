@@ -8,7 +8,7 @@ import InstructorPage from "./components/InstructorPage";
 import { UserContext } from "./contexts/UserContext";
 import Private from "./components/Private";
 import Home from "./components/home/Home";
-import AboutUs from "./components/home/AboutUs";
+import AboutUs from "./components/home/AboutUs"
 import ContactUs from "./components/home/ContactUs";
 
 function App() {
