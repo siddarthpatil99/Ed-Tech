@@ -3,13 +3,9 @@ import toast from "react-hot-toast";
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { SIGNIN_URL } from "../apiConfig";
-import { UserContext } from "../contexts/UserContext";
 import { IoIosArrowBack } from "react-icons/io";
 
 const Signin = () => {
-  // const loggedData = useContext(UserContext);
-  const {setLoggedUser} = useContext(UserContext);
-
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -31,10 +27,10 @@ const Signin = () => {
       const { token, role } = response.data;
       toast.success("Signed in successfully");
       localStorage.setItem("lms-token", token);
-      setLoggedUser(token);
+      
       console.log(response.data);
 
-      setFormData({email: "", password: ""});
+      setFormData({ email: "", password: "" });
 
       if (role === "student") {
         console.log("Navigating to the student page");
