@@ -6,7 +6,7 @@ const Navbar = () => {
     <>
       <nav className="bg-gray-800 p-4">
         <div className="container mx-auto flex justify-between items-center">
-          <div className="text-white text-2xl font-bold">LMS_NAME</div>
+          <div className="text-white text-2xl font-bold">Ed-Tech</div>
           <div className="flex-grow flex justify-center space-x-4">
             <Link to="/home" className="text-white hover:text-gray-400">
               Home

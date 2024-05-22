@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { GET_COURSES } from '../../apiConfig';
+import { FEATURED_COURSES } from '../../apiConfig';
 
 const FeaturedCourses = () => {
 
@@ -9,7 +9,7 @@ const FeaturedCourses = () => {
     useEffect(() => {
         const fetchCourses = async () => {
             try {
-                const response = await axios.get(GET_COURSES);
+                const response = await axios.get(FEATURED_COURSES);
                 setCourses(response.data.courses.slice(0, 4));
                 console.log(response.data)
             } catch (error) {

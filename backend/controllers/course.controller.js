@@ -37,7 +37,7 @@ export const createCourse = async (req, res) => {
       category,
       price,
       videoUrl,
-      thumbnailUrl
+      thumbnailUrl,
     });
 
     return res.status(201).json({
@@ -55,13 +55,51 @@ export const createCourse = async (req, res) => {
   }
 };
 
-
 export const getCourses = async (req, res) => {
   try {
     const courses = await Course.find();
 
-    return res.status(200).json({message: "Course retrieved successfully", courses: courses, success: true});
+    return res.status(200).json({
+      message: "Course retrieved successfully",
+      courses: courses,
+      success: true,
+    });
   } catch (error) {
-    return res.status(500).json({message: "Failed to retrieve courses", error: error.message, success: false});
+    return res.status(500).json({
+      message: "Failed to retrieve courses",
+      error: error.message,
+      success: false,
+    });
   }
-}
+};
+
+export const featuredCourses = async (req, res) => {
+  try {
+    const courses = await Course.find().select("title price thumbnailUrl");
+
+    return res.status(200).json({
+      message: "Course retrived successfully",
+      courses: courses,
+      success: true,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Failed to retrieve courses",
+      error: error.message,
+      success: false,
+    });
+  }
+};
+
+export const deleteCourse = async (req, res) => {
+  try {
+    const courseId = req.params.id;
+    await Course.findByIdAndDelete(courseId);
+
+    res.status(200).json({ message: "Course deleted successfully" });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Failed to delete course", error: error.message });
+  }
+};

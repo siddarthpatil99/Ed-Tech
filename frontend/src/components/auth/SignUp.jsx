@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { SEND_OTP, VERIFY_OTP, SIGNUP_URL } from "../apiConfig";
+import { SEND_OTP, VERIFY_OTP, SIGNUP_URL } from "../../apiConfig";
 import { useNavigate, Link } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";
 import axios from "axios";

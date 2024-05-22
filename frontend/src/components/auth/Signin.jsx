@@ -2,7 +2,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { SIGNIN_URL } from "../apiConfig";
+import { SIGNIN_URL } from "../../apiConfig";
 import { IoIosArrowBack } from "react-icons/io";
 
 const Signin = () => {
