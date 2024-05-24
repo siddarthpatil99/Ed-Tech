@@ -1,25 +1,42 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { CREATE_COURSE } from "../../apiConfig";
 
 const AddCourse = () => {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
-    price: "",
-    thumbnailUrl: "",
+    // thumbnailUrl: "",
     videoUrl: "",
   });
+
+  const [thumbnail, setThumbnail] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleThumnbnailChange = (e) => {
+    setThumbnail(e.target.files[0]);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const formDataWithFile = new FormData();
+      formDataWithFile.append("title", formData.title);
+      formDataWithFile.append("description", formData.description);
+      formDataWithFile.append("videoUrl", formData.videoUrl);
+      formDataWithFile.append("thumbnail", thumbnail)
+
       // Send POST request to backend API
-      await axios.post("YOUR_BACKEND_ENDPOINT", formData);
+      await axios.post(CREATE_COURSE, formDataWithFile, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("lms-token"),
+          "Content-Type": "multipart/form-data",
+        },
+      });
       // Handle success (e.g., display success message)
       console.log("Course added successfully!");
     } catch (error) {
@@ -30,10 +47,10 @@ const AddCourse = () => {
     setFormData({
       title: "",
       description: "",
-      price: "",
-      thumbnailUrl: "",
+      //   thumbnail: "",
       videoUrl: "",
     });
+    setThumbnail(null);
   };
 
   return (
@@ -53,7 +70,10 @@ const AddCourse = () => {
             className="w-full p-2 border border-gray-300 rounded text-black"
             required
           />
-          <label htmlFor="title" className="block mt-2 mb-2 text-sm font-bold">
+          <label
+            htmlFor="description"
+            className="block mt-2 mb-2 text-sm font-bold"
+          >
             Course Description
           </label>
           <textarea
@@ -65,31 +85,25 @@ const AddCourse = () => {
             className="w-full p-2 border border-gray-300 rounded text-black"
             required
           />
-          <label htmlFor="title" className="block mt-2 mb-2 text-sm font-bold">
-            Price
+          <label
+            htmlFor="thumbnail"
+            className="block mt-2 mb-2 text-sm font-bold"
+          >
+            Thumbnail (PNG or JPG)
           </label>
           <input
-            type="number"
-            id="price"
-            name="price"
-            value={formData.price}
-            onChange={handleChange}
+            type="file"
+            id="thumbnail"
+            name="thumbnail"
+            accept="image/png, image/jpeg"
+            onChange={handleThumnbnailChange}
             className="w-full p-2 border border-gray-300 rounded text-black"
             required
           />
-          <label htmlFor="title" className="block mt-2 mb-2 text-sm font-bold">
-            ThumbnailUrl
-          </label>
-          <input
-            type="text"
-            id="thumbnailUrl"
-            name="thumbnailUrl"
-            value={formData.thumbnailUrl}
-            onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded text-black"
-            required
-          />
-          <label htmlFor="title" className="block mt-2 mb-2 text-sm font-bold">
+          <label
+            htmlFor="videoUrl"
+            className="block mt-2 mb-2 text-sm font-bold"
+          >
             VideoUrl
           </label>
           <input
@@ -102,11 +116,6 @@ const AddCourse = () => {
             required
           />
         </div>
-        {/* Repeat similar structure for other form fields */}
-        {/* Description */}
-        {/* Price */}
-        {/* Thumbnail URL */}
-        {/* Video URL */}
         <button
           type="submit"
           className="bg-green-500 text-white px-4 py-2 rounded-md"

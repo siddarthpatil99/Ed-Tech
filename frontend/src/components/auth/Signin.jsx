@@ -34,10 +34,10 @@ const Signin = () => {
 
       if (role === "student") {
         console.log("Navigating to the student page");
-        navigate("/studentpage");
+        navigate("/studentpage/profile");
       } else if (role === "instructor") {
         console.log("Navigating to the instructor page");
-        navigate("/instructorpage");
+        navigate("/instructorpage/profile");
       } else {
         // console.log("Invalid role received from the server");
         setError("Invalid role received from the server");

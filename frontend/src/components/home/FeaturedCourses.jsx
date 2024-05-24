@@ -27,9 +27,9 @@ const FeaturedCourses = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 ld:grid-cols-4 gap-6">
                 {courses.map((course) => (
                     <div key={course._id} className="bg-gray-800 p-4 rounded-lg shadow-lg">
-                        <img src={course.thumbnailUrl} alt={course.title} className="w-full h-48 object-cover rounded-sm mb-4" />
+                        <img src={course.thumbnail.url} alt={course.title} className="w-full h-48 object-cover rounded-sm mb-4" />
                         <h3 className="text-xl font-semibold text-white">{course.title}</h3>
-                        <p className="text-gray-400">${course.price}</p>
+                        {/* <p className="text-gray-400">${course.price}</p> */}
                     </div>
                 ))}
             </div>

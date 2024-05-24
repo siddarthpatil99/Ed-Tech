@@ -45,14 +45,14 @@ const ManageCourses = () => {
               className="bg-gray-800 p-3 rounded-lg shadow-lg"
             >
               <img
-                src={course.thumbnailUrl}
-                alt={course.title}
+                src={course.thumbnail.url}
+                alt={course.thumbnail}
                 className="w-11/12 h-47 object-cover rounded-sm mb-4"
               />
               <h3 className="text-xl font-semibold text-white">
                 {course.title}
               </h3>
-              <p className="text-gray-400">${course.price}</p>
+              {/* <p className="text-gray-400">${course.price}</p> */}
               <button
                 onClick={() => handleDeleteCourse(course._id)}
                 className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"

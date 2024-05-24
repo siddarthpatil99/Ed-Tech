@@ -18,22 +18,28 @@ const courseSchema = new mongoose.Schema(
       ref: "User",
       // required: true,
     },
-    category: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    price: {
-      type: Number,
-      required: true,
-    },
+    // category: {
+    //   type: String,
+    //   required: true,
+    //   trim: true,
+    // },
+    // price: {
+    //   type: Number,
+    //   required: true,
+    // },
     videoUrl: {
       type: String,
       required: true,
     },
-    thumbnailUrl: {
-      type: String,
-      required: true,
+    thumbnail: {
+      public_id: {
+        type: String,
+        required: true
+      },
+      url: {
+        type: String,
+        required: true
+      }
     },
   },
   { timestamps: true }
