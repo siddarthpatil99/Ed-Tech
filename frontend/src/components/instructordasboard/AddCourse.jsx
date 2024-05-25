@@ -54,7 +54,7 @@ const AddCourse = () => {
   };
 
   return (
-    <div className="container mx-auto px-4">
+    <div className="w-full h-full bg-gray-800 p-6 rounded-lg shadow-lg">
       <h1 className="text-3xl font-bold mb-4">Add New Course</h1>
       <form onSubmit={handleSubmit} className="bg-gray-700 p-6 rounded-lg">
         <div className="mb-4">

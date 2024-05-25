@@ -22,7 +22,7 @@ const StudentProfile = () => {
 
   return (
     <>
-      <div className="mb-6">
+      <div className="h-full bg-gray-800 p-6 rounded-lg shadow-lg">
         <h1 className="text-3xl font-bold mb-4">My Profile</h1>
         {isEditingProfile ? (
           <form

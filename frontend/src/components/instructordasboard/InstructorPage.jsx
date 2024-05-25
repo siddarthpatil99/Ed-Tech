@@ -9,16 +9,10 @@ const InstructorPage = () => {
   return (
     <>
       <div className="flex h-screen">
-        <SideBar />
-        {/* <div className="bg-gray-900 text-white flex-1 p-6">
-          <Routes>
-            <Route path="/profile" element={<MyProfile />} />
-            <Route path="/manage-courses" element={<ManageCourses />} />
-            <Route path="/settings" element={<div>Settings Component</div>} />
-            <Route path="*" element={<Navigate to="/instructorpage/profile" />} />
-          </Routes>
-        </div> */}
-        <div className="bg-gray-900 text-white flex-1 p-6">
+        <div className="fixed w-64 h-full">
+          <SideBar />
+        </div>
+        <div className="flex-1 ml-64 bg-gray-900 text-white p-6 overflow-y-auto">
           <Outlet />
         </div>
       </div>

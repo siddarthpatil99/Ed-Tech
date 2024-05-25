@@ -10,7 +10,7 @@ const SideBar = () => {
   };
   return (
     <>
-      <div className="bg-gray-800 text-white w-1/4 p-4 min-h-screen">
+      <div className="bg-gray-800 text-white w-64 p-4 h-full fixed top-0 left-0">
         <h2 className="text-2xl font-bold mb-8">Ed-Tech</h2>
         <ul className="space-y-4">
           <li>
