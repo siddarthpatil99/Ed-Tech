@@ -23,11 +23,11 @@ const SideBar = () => {
               Courses
             </Link>
           </li>
-          {/* <li>
-            <Link to="/studentpage/add-course" className="block py-2">
-              Add Courses
+          <li>
+            <Link to="/studentpage/favorites" className="block py-2">
+              Favorites
             </Link>
-          </li> */}
+          </li>
           <li>
             <Link to="/studentpage/settings" className="block py-2">
               Settings

@@ -15,6 +15,7 @@ import AddCourse from "./components/instructordasboard/AddCourse";
 import StudentProfile from "./components/studentdasboard/StudentProfile";
 import Courses from "./components/studentdasboard/Courses";
 import CourseDetails from "./components/studentdasboard/CourseDetails";
+import Favorites from "./components/studentdasboard/Favorites";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
               <Route path="profile" element={<StudentProfile />} />
               <Route path="courses" element={<Courses />} />
               <Route path="course/:id" element={<CourseDetails />} />
+              <Route path="favorites" element={<Favorites />} />
             </Route>
           </Route>
         </Routes>

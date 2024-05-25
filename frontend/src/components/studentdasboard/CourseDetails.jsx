@@ -19,6 +19,7 @@ const CourseDetails = () => {
     const getCourseDetails = async () => {
       try {
         const response = await axios.get(`${GET_COURSE_DETAILS}/${id}`);
+        console.log("API Response: ", response);
         setCourse(response.data.course);
         console.log("Video URL: ", response.data.course.videoUrl);
       } catch (error) {
