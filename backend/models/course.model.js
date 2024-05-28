@@ -18,15 +18,6 @@ const courseSchema = new mongoose.Schema(
       ref: "User",
       // required: true,
     },
-    // category: {
-    //   type: String,
-    //   required: true,
-    //   trim: true,
-    // },
-    // price: {
-    //   type: Number,
-    //   required: true,
-    // },
     videoUrl: {
       type: String,
       required: true,
@@ -41,6 +32,11 @@ const courseSchema = new mongoose.Schema(
         required: true
       }
     },
+    instructorId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Instructor',
+      required: true,
+    }
   },
   { timestamps: true }
 );

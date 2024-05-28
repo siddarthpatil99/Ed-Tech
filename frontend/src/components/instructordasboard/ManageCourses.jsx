@@ -1,12 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { DELETE_COURSES, GET_COURSES } from "../../apiConfig";
-import { FaSpinner } from "react-icons/fa";
+import { FaSpinner, FaTrash } from "react-icons/fa";
 
 const ManageCourses = () => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
+  const instructorId = localStorage.getItem("instructorId")
 
   useEffect(() => {
     const getCourses = async () => {
@@ -14,6 +15,7 @@ const ManageCourses = () => {
         await new Promise(resolve => setTimeout(resolve, 1000));
         const response = await axios.get(GET_COURSES);
         setCourses(response.data.courses);
+       
       } catch (error) {
         console.error("Error fetching courses: ", error);
       } finally {
@@ -21,7 +23,7 @@ const ManageCourses = () => {
       }
     };
     getCourses();
-  }, []);
+  }, [instructorId]);
 
   if (loading) {
     return (
@@ -34,7 +36,9 @@ const ManageCourses = () => {
 
   const handleDeleteCourse = async (courseId) => {
     try {
-      await axios.delete(`${DELETE_COURSES}/${courseId}`);
+      await axios.delete(`${DELETE_COURSES}/${courseId}`, {
+        headers: {Authorization: `Bearer ${localStorage.getItem('lms-token')}`},
+      });
       setCourses((prevCourses) =>
         prevCourses.filter((course) => course._id !== courseId)
       );
@@ -43,8 +47,8 @@ const ManageCourses = () => {
     }
   };
 
-  const filteredCourses = courses.filter((courses) =>
-    courses.title.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredCourses = courses.filter((course) =>
+    course.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -71,15 +75,19 @@ const ManageCourses = () => {
                 alt={course.thumbnail}
                 className="w-11/12 h-47 object-cover rounded-sm mb-4"
               />
-              <h3 className="text-lg font-semibold text-white">
-                {course.title}
-              </h3>
-              <button
-                onClick={() => handleDeleteCourse(course._id)}
-                className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-              >
-                Delete Course
-              </button>
+              <div className="flex justify-between items-center">
+                <h3 className="text-lg font-semibold text-white">
+                  {course.title}
+                </h3>
+                {/* Render delete icon only if the course belongs to the logged-in instructor */}
+                {localStorage.getItem("instructorId") ===
+                  course.instructorId && (
+                  <FaTrash
+                    onClick={() => handleDeleteCourse(course._id)}
+                    className="cursor-pointer"
+                  />
+                )}
+              </div>
             </div>
           ))}
         </div>

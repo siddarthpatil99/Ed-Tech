@@ -55,25 +55,6 @@ export const signIn = async (req, res) => {
         .json({ message: "User not found", success: false });
     }
 
-    // const userPwd = existingUser.password;
-    // const isPwdCorrect = await bcrypt.compare(password, userPwd);
-
-    // if (!isPwdCorrect) {
-    //   return res
-    //     .status(403)
-    //     .json({ message: "Incorrect Password", success: false });
-    // }
-
-    // const token = await jwt.sign(
-    //   { userId: existingUser._id },
-    //   process.env.JWT_SECRET,
-    //   { expiresIn: process.env.JWT_EXPIRY }
-    // );
-
-    // return res
-    //   .status(200)
-    //   .json({ message: "Login Sucsess", token: token, success: true });
-
     const isPwdCorrect = await bcrypt.compare(password, existingUser.password);
     if (!isPwdCorrect) {
       return res
@@ -89,7 +70,12 @@ export const signIn = async (req, res) => {
 
     return res
       .status(200)
-      .json({ message: "Login success", token, role: existingUser.role });
+      .json({
+        message: "Login success",
+        token,
+        role: existingUser.role,
+        userId: existingUser._id,
+      });
   } catch (error) {
     return res
       .status(500)

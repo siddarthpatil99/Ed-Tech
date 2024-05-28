@@ -13,7 +13,7 @@ const router = Router();
 router.post("/create-course", authMiddleware, createCourse);
 router.get("/get-courses", getCourses);
 router.get("/featured-courses", featuredCourses);
-router.delete("/delete-course/:id", deleteCourse);
+router.delete("/delete-course/:id", authMiddleware, deleteCourse);
 router.get("/:id", getCourseDetails);
 
 export default router;

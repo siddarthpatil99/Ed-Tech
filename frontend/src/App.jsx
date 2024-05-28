@@ -16,6 +16,7 @@ import StudentProfile from "./components/studentdasboard/StudentProfile";
 import Courses from "./components/studentdasboard/Courses";
 import CourseDetails from "./components/studentdasboard/CourseDetails";
 import Favorites from "./components/studentdasboard/Favorites";
+import NotFound from "./components/NotFound";
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
               <Route path="favorites" element={<Favorites />} />
             </Route>
           </Route>
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
     </>

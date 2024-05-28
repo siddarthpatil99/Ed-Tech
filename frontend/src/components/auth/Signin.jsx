@@ -24,9 +24,10 @@ const Signin = () => {
     // Implement sign-in logic here
     try {
       const response = await axios.post(SIGNIN_URL, formData);
-      const { token, role } = response.data;
+      const { token, role, userId } = response.data;
       toast.success("Signed in successfully");
       localStorage.setItem("lms-token", token);
+      localStorage.setItem("instructorId", userId);
       
       console.log(response.data);
 
