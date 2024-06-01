@@ -1,13 +1,16 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { DELETE_COURSES, GET_COURSES } from "../../apiConfig";
-import { FaSpinner, FaTrash } from "react-icons/fa";
+import { FaSpinner, FaTrash, FaEye } from "react-icons/fa";
 import toast from "react-hot-toast";
+import PopUp from "./PopUp";
 
 const ManageCourses = () => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCourse, setSelectedCourse] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const instructorId = localStorage.getItem("instructorId");
 
   useEffect(() => {
@@ -15,6 +18,7 @@ const ManageCourses = () => {
       try {
         await new Promise((resolve) => setTimeout(resolve, 1000));
         const response = await axios.get(GET_COURSES);
+        console.log("Courses response: ", response.data.courses);
         setCourses(response.data.courses);
       } catch (error) {
         console.error("Error fetching courses: ", error);
@@ -24,6 +28,17 @@ const ManageCourses = () => {
     };
     getCourses();
   }, [instructorId]);
+
+  const handleOpenModal = (course) => {
+    console.log("Selected Course:", course);
+    setSelectedCourse(course);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedCourse(null);
+  };
 
   if (loading) {
     return (
@@ -83,19 +98,32 @@ const ManageCourses = () => {
                 <h3 className="text-md font-semibold text-white">
                   {course.title}
                 </h3>
-                {/* Render delete icon only if the course belongs to the logged-in instructor */}
-                {localStorage.getItem("instructorId") ===
-                  course.instructorId && (
-                  <FaTrash
-                    onClick={() => handleDeleteCourse(course._id)}
-                    className="cursor-pointer"
-                  />
-                )}
+                {/* Render view, delete icon only if the course belongs to the logged-in instructor */}
+                <div className="flex items-center space-x-3">
+                  {localStorage.getItem("instructorId") ===
+                    course.instructorId && (
+                    <>
+                      <FaEye
+                        onClick={() => handleOpenModal(course)}
+                        className="cursor-pointer text-white"
+                      />
+                      <FaTrash
+                        onClick={() => handleDeleteCourse(course._id)}
+                        className="cursor-pointer text-white"
+                      />
+                    </>
+                  )}
+                </div>
               </div>
             </div>
           ))}
         </div>
       </div>
+      <PopUp
+        isModalOpen={isModalOpen}
+        handleCloseModal={handleCloseModal}
+        selectedCourse={selectedCourse}
+      />
     </div>
   );
 };
