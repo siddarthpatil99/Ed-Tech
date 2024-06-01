@@ -2,21 +2,39 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import { FaSpinner } from "react-icons/fa";
+import toast from "react-hot-toast";
 
 const Favorites = () => {
   const [favorites, setFavorites] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const savedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
-    setFavorites(savedFavorites);
+    const favorites = async () => {
+      try {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        const savedFavorites =
+          JSON.parse(localStorage.getItem("favorites")) || [];
+        setFavorites(savedFavorites);
+      } catch (error) {
+        console.error("Failed to fetch favourites: ", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    
+    favorites()
   }, []);
 
-  // const handleRemoveFavorite = (courseId) => {
-  //     const updatedFavorites = favorites.filter(course => course._id !== courseId);
-  //     setFavorites(updatedFavorites);
-  //     localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
-  // }
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <FaSpinner className="animate-spin text-blue-500 mr-2" />
+        <span>Loading...</span>
+      </div>
+    );
+  }
 
   const toggleFavorite = (course) => {
     const isFavorite = favorites.some((fav) => fav._id === course._id);
@@ -26,7 +44,13 @@ const Favorites = () => {
 
     setFavorites(updatedFavorites);
     localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+
+    if (isFavorite) {
+      toast.success("Removed from favourites");
+    }
   };
+
+  
 
   const handleViewCourse = (courseId) => {
     navigate(`/studentpage/course/${courseId}`);
@@ -35,25 +59,27 @@ const Favorites = () => {
   return (
     <div className="bg-gray-900 py-12 min-h-screen">
       <div className="container mx-auto px-4">
-        <h1 className="text-3xl font-bold text-white mb-6">Favorite Courses</h1>
+        <h1 className="text-3xl font-bold text-white mb-6">
+          Favourite Courses
+        </h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
           {favorites.length > 0 ? (
             favorites.map((course) => (
               <div
                 key={course._id}
-                className="bg-gray-800 p-3 rounded-lg shadow-lg flex flex-col justify-between"
+                className="bg-gray-800 p-3 rounded-lg shadow-lg border border-slate-700"
               >
                 <div>
                   <img
                     src={course.thumbnail.url}
                     alt={course.title}
-                    className="w-11/12 h-47 object-cover rounded-sm mb-4"
+                    className="w-[100%] h-[60%] object-cover rounded-sm mb-4"
                   />
-                  <h3 className="text-xl font-semibold text-white">
+                  <h3 className="text-lg font-semibold text-white">
                     {course.title}
                   </h3>
                 </div>
-                <div className="flex justify-between mt-2">
+                <div className="flex justify-between items-center mt-4">
                   <button
                     onClick={() => toggleFavorite(course)}
                     className="text-red-500 text-2xl"

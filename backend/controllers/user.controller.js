@@ -83,9 +83,10 @@ export const signIn = async (req, res) => {
   }
 };
 
-export const updateInfo = async (req, res) => {
+export const updateUser = async (req, res) => {
   const { success } = updateSchema.safeParse(req.body);
-  const { email, name, oldPassword, newPassword } = req.body;
+  const { name, oldPassword, newPassword } = req.body;
+  const userId = req.user._id;
 
   if (!success) {
     return res
@@ -94,16 +95,12 @@ export const updateInfo = async (req, res) => {
   }
 
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findById(userId);
 
     if (!user) {
       return res
         .status(404)
         .json({ message: "User not found", success: false });
-    }
-
-    if (name) {
-      user.name = name;
     }
 
     const isPwdCorrect = await bcrypt.compare(oldPassword, user.password);
@@ -116,7 +113,12 @@ export const updateInfo = async (req, res) => {
 
     const hashNewPwd = await bcrypt.hash(newPassword, 10);
 
+    if (name) {
+      user.name = name;
+    }
+
     user.password = hashNewPwd;
+
     await user.save();
 
     return res
@@ -142,7 +144,7 @@ export const currentUser = async (req, res) => {
     const currentUser = {
       email: user.email,
       name: user.name,
-      password: user.password,
+      role: user.role,
     };
 
     return res.status(200).json({ currentUser });

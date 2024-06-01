@@ -4,13 +4,16 @@ import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { SIGNIN_URL } from "../../apiConfig";
 import { IoIosArrowBack } from "react-icons/io";
+import { LoaderCircle } from "lucide-react";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
 const Signin = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -21,14 +24,16 @@ const Signin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     // Implement sign-in logic here
     try {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       const response = await axios.post(SIGNIN_URL, formData);
       const { token, role, userId } = response.data;
       toast.success("Signed in successfully");
       localStorage.setItem("lms-token", token);
       localStorage.setItem("instructorId", userId);
-      
+
       console.log(response.data);
 
       setFormData({ email: "", password: "" });
@@ -46,16 +51,16 @@ const Signin = () => {
 
       console.log("Signin response", response.data);
     } catch (error) {
+      toast.error(error.response?.data?.message || error.message);
       console.error("Error signing in: ", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-900">
       <div className="max-w-md w-full bg-white p-8 rounded shadow-lg">
-        <h2 className="text-3xl font-bold mb-6 text-center text-gray-900">
-          Sign in
-        </h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-6">
             <label
@@ -70,10 +75,11 @@ const Signin = () => {
               name="email"
               value={formData.email}
               onChange={handleChange}
+              placeholder="Email Address"
               className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             />
           </div>
-          <div className="mb-8">
+          <div className="mb-8 relative">
             <label
               htmlFor="password"
               className="block text-gray-900 font-semibold mb-2"
@@ -81,19 +87,33 @@ const Signin = () => {
               Password
             </label>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               id="password"
               name="password"
               value={formData.password}
+              placeholder="Password"
               onChange={handleChange}
               className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             />
+            <button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              className="absolute inset-y-0 right-0 pr-3 mt-8 flex items-center text-gray-600"
+            >
+              {showPassword ? <AiFillEye className="h-6 w-6" /> : <AiFillEyeInvisible className="h-6 w-6" />}
+            </button>
           </div>
           <button
             type="submit"
             className="w-full py-3 px-6 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring focus:ring-green-200 focus:ring-opacity-50"
           >
-            Sign in
+            {loading ? (
+              <div className="flex justify-center items-center">
+                <LoaderCircle className="h-5 w-5 animate-spin " />
+              </div>
+            ) : (
+              <span className="">Sign in</span>
+            )}
           </button>
         </form>
         <p className="mt-5">

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { FaSpinner } from "react-icons/fa";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 const Courses = () => {
   const [courses, setCourses] = useState([]);
@@ -16,7 +17,7 @@ const Courses = () => {
   useEffect(() => {
     const getCourses = async () => {
       try {
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         const response = await axios.get(GET_COURSES);
         setCourses(response.data.courses);
       } catch (error) {
@@ -29,19 +30,21 @@ const Courses = () => {
   }, []);
 
   useEffect(() => {
-    const savedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    const savedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
     setFavorites(savedFavorites);
   }, []);
 
   const handleFavoriteToggle = (course) => {
     let updatedFavorites;
-    if (favorites.some(fav => fav._id === course._id)) {
-      updatedFavorites = favorites.filter(fav => fav._id !== course._id);
+    if (favorites.some((fav) => fav._id === course._id)) {
+      toast.success("Removed from favourites");
+      updatedFavorites = favorites.filter((fav) => fav._id !== course._id);
     } else {
       updatedFavorites = [...favorites, course];
+      toast.success("Added to favourites");
     }
     setFavorites(updatedFavorites);
-    localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+    localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
   };
 
   if (loading) {
@@ -50,7 +53,7 @@ const Courses = () => {
         <FaSpinner className="animate-spin text-blue-500 mr-2" />
         <span>Loading...</span>
       </div>
-    )
+    );
   }
 
   const handleViewCourse = (courseId) => {
@@ -79,14 +82,14 @@ const Courses = () => {
             {filteredCourses.map((course) => (
               <div
                 key={course._id}
-                className="bg-gray-800 p-3 rounded-lg shadow-lg"
+                className="bg-gray-800 p-3 rounded-lg shadow-lg border border-slate-700"
               >
                 <img
                   src={course.thumbnail.url}
                   alt={course.thumbnail}
-                  className="w-11/12 h-47 object-cover rounded-sm mb-4"
+                  className="w-[100%] h-[60%] object-cover rounded-sm mb-4"
                 />
-                <h3 className="text-lg font-semibold text-white">
+                <h3 className="text-md font-semibold text-white">
                   {course.title}
                 </h3>
                 <div className="flex justify-between items-center mt-4">

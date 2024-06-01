@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { signIn, signUp, updateInfo, usersList } from "../controllers/user.controller.js";
+import { currentUser, signIn, signUp, updateUser, usersList } from "../controllers/user.controller.js";
 import { sendEmail, verifyOTP } from "../controllers/otp.controller.js";
 import { authMiddleware } from "../middlewares/auth.middleware.js";
 
@@ -11,8 +11,9 @@ router.post("/signin", signIn);
 router.post("/send-otp", sendEmail);
 router.post("/verify-otp", verifyOTP);
 
-router.put("/", authMiddleware, updateInfo);
+router.put("/updateUser", authMiddleware, updateUser);
 
-router.get("/usersList", authMiddleware, usersList)
+router.get("/usersList", authMiddleware, usersList);
+router.get("/currentUser", authMiddleware, currentUser);
 
 export default router;

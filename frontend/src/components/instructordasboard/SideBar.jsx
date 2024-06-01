@@ -1,47 +1,97 @@
-import React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { CircleUser, BookText, Settings, BookPlus } from "lucide-react";
+import React from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const SideBar = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
 
-    const logout = () => {
-        localStorage.removeItem("lms-token");
-        navigate("/signin");
-    }
+  const logout = () => {
+    localStorage.removeItem("lms-token");
+    toast.success("Logged out successfully");
+    navigate("/home");
+  };
   return (
     <>
       <div className="bg-gray-800 text-white p-4 top-0 left-0 h-full w-64 fixed">
-        <h2 className="text-2xl font-bold mb-8">Ed-Tech</h2>
-        <ul className="space-y-4">
-          <li>
-            <Link to="/instructorpage/profile" className="block py-2">
-              My Profile
-            </Link>
-          </li>
-          <li>
-            <Link to="/instructorpage/manage-courses" className="block py-2">
-              Manage Courses
-            </Link>
-          </li>
-          <li>
-            <Link to="/instructorpage/add-course" className="block py-2">
-              Add Courses
-            </Link>
-          </li>
-          <li>
-            <Link to="/instructorpage/settings" className="block py-2">
-              Settings
-            </Link>
-          </li>
-          <li>
-            <button onClick={logout} className="w-full text-left py-2">
-              Logout
-            </button>
-          </li>
+        <h2 className="text-3xl font-bold mb-8">
+          <span className="text-blue-500 pr-1">Ed</span>-
+          <span className="pl-1">Tech</span>
+        </h2>
+        <ul className="space-y-4 font-bold">
+          <Link
+            to="/instructorpage/profile"
+            className="block hover:cursor-pointer"
+          >
+            <li
+              className={`flex px-2 py-4  items-center gap-x-2  hover:bg-gray-600 hover:rounded-md ${
+                pathname === "/instructorpage/profile"
+                  ? "bg-gray-600 rounded-md"
+                  : ""
+              }`}
+            >
+              <CircleUser />
+              <span className="tracking-[2px]">My Profile</span>
+            </li>
+          </Link>
+          <Link
+            to="/instructorpage/manage-courses"
+            className="block hover:cursor-pointer"
+          >
+            <li
+              className={`flex px-2 py-4  items-center gap-x-2  hover:bg-gray-600 hover:rounded-md ${
+                pathname === "/instructorpage/manage-courses"
+                  ? "bg-gray-600 rounded-md"
+                  : ""
+              }`}
+            >
+              <BookText />
+              <span className="tracking-[2px]">Manage Courses</span>
+            </li>
+          </Link>
+          <Link
+            to="/instructorpage/add-course"
+            className="block hover:cursor-pointer"
+          >
+            <li
+              className={`flex px-2 py-4  items-center gap-x-2  hover:bg-gray-600 hover:rounded-md ${
+                pathname === "/instructorpage/add-course"
+                  ? "bg-gray-600 rounded-md"
+                  : ""
+              }`}
+            >
+              <BookPlus />
+              <span className="tracking-[2px]">Add Course</span>
+            </li>
+          </Link>
+          <Link
+            to="/instructorpage/settings"
+            className="block hover:cursor-pointer"
+          >
+            <li
+              className={`flex px-2 py-4  items-center gap-x-2  hover:bg-gray-600 hover:rounded-md ${
+                pathname === "/instructorpage/settings"
+                  ? "bg-gray-600 rounded-md"
+                  : ""
+              }`}
+            >
+              <Settings />
+              <span className="tracking-[2px]">Settings</span>
+            </li>
+          </Link>
         </ul>
+        <div className="absolute bottom-6 px-2">
+          <button
+            onClick={logout}
+            className=" text-white px-4 py-2 rounded-md  bg-red-400 hover:bg-red-500"
+          >
+            Logout
+          </button>
+        </div>
       </div>
     </>
   );
-}
+};
 
-export default SideBar
+export default SideBar;

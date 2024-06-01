@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { CREATE_COURSE } from "../../apiConfig";
+import { Loader } from "lucide-react";
+import toast from "react-hot-toast";
 
 const AddCourse = () => {
   const [formData, setFormData] = useState({
@@ -9,6 +11,7 @@ const AddCourse = () => {
     // thumbnailUrl: "",
     videoUrl: "",
   });
+  const [loading, setLoading] = useState(false);
 
   const [thumbnail, setThumbnail] = useState(null);
 
@@ -28,7 +31,9 @@ const AddCourse = () => {
       formDataWithFile.append("title", formData.title);
       formDataWithFile.append("description", formData.description);
       formDataWithFile.append("videoUrl", formData.videoUrl);
-      formDataWithFile.append("thumbnail", thumbnail)
+      formDataWithFile.append("thumbnail", thumbnail);
+
+      setLoading(true);
 
       // Send POST request to backend API
       await axios.post(CREATE_COURSE, formDataWithFile, {
@@ -39,9 +44,14 @@ const AddCourse = () => {
       });
       // Handle success (e.g., display success message)
       console.log("Course added successfully!");
+      toast.success("Course added successfully!");
+
     } catch (error) {
       // Handle error (e.g., display error message)
       console.error("Error adding course: ", error);
+      toast.error("Unable to add course");
+    } finally {
+      setLoading(false);
     }
     // Reset form fields after submission
     setFormData({
@@ -54,7 +64,7 @@ const AddCourse = () => {
   };
 
   return (
-    <div className="w-full h-full bg-gray-800 p-6 rounded-lg shadow-lg">
+    <div className="w-full h-screen p-6 rounded-lg shadow-lg">
       <h1 className="text-3xl font-bold mb-4">Add New Course</h1>
       <form onSubmit={handleSubmit} className="bg-gray-700 p-6 rounded-lg">
         <div className="mb-4">
@@ -67,7 +77,7 @@ const AddCourse = () => {
             name="title"
             value={formData.title}
             onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded text-black"
+            className="w-full p-2 border border-gray-300 rounded text-black bg-slate-200"
             required
           />
           <label
@@ -81,8 +91,9 @@ const AddCourse = () => {
             id="description"
             name="description"
             value={formData.description}
+            rows={7}
             onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded text-black"
+            className="w-full p-2 border border-gray-300 rounded text-black bg-slate-200"
             required
           />
           <label
@@ -97,7 +108,7 @@ const AddCourse = () => {
             name="thumbnail"
             accept="image/png, image/jpeg"
             onChange={handleThumnbnailChange}
-            className="w-full p-2 border border-gray-300 rounded text-black"
+            className="w-full p-2 border border-gray-300 rounded text-black "
             required
           />
           <label
@@ -112,15 +123,21 @@ const AddCourse = () => {
             name="videoUrl"
             value={formData.videoUrl}
             onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded text-black"
+            className="w-full p-2 border border-gray-300 rounded text-black bg-slate-200"
             required
           />
         </div>
         <button
           type="submit"
-          className="bg-green-500 text-white px-4 py-2 rounded-md"
+          className="bg-green-500 px-4 w-36 py-2 text-white  rounded-md"
         >
-          Add Course
+          {loading ? (
+            <div className="flex justify-center items-center">
+              <Loader className="h-5 w-5 animate-spin " />
+            </div>
+          ) : (
+            <span className="">Add Course</span>
+          )}
         </button>
       </form>
     </div>
