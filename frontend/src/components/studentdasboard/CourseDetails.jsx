@@ -49,7 +49,9 @@ const CourseDetails = () => {
           <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
             <div className="flex">
               <YouTube videoId={getYouTubeVideoId(course.videoUrl)} />
-              <p className="text-white-900 ml-6 text-justify">{course.description}</p>
+              <p className="text-white-900 ml-6 text-justify">
+                {course.description}
+              </p>
             </div>
           </div>
         </div>

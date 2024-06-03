@@ -1,6 +1,6 @@
 import axios from "axios";
 import toast from "react-hot-toast";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { SIGNIN_URL } from "../../apiConfig";
 import { IoIosArrowBack } from "react-icons/io";
@@ -34,32 +34,24 @@ const Signin = () => {
       localStorage.setItem("lms-token", token);
       localStorage.setItem("instructorId", userId);
 
-      console.log(response.data);
-
       setFormData({ email: "", password: "" });
 
       if (role === "student") {
-        console.log("Navigating to the student page");
         navigate("/studentpage/profile");
       } else if (role === "instructor") {
-        console.log("Navigating to the instructor page");
         navigate("/instructorpage/profile");
       } else {
-        // console.log("Invalid role received from the server");
         setError("Invalid role received from the server");
       }
-
-      console.log("Signin response", response.data);
     } catch (error) {
       toast.error(error.response?.data?.message || error.message);
-      console.error("Error signing in: ", error);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900">
+    <div className="min-h-screen flex items-center justify-center bg-gray-900 p-4">
       <div className="max-w-md w-full bg-white p-8 rounded shadow-lg">
         <form onSubmit={handleSubmit}>
           <div className="mb-6">
@@ -100,7 +92,11 @@ const Signin = () => {
               onClick={() => setShowPassword((prev) => !prev)}
               className="absolute inset-y-0 right-0 pr-3 mt-8 flex items-center text-gray-600"
             >
-              {showPassword ? <AiFillEye className="h-6 w-6" /> : <AiFillEyeInvisible className="h-6 w-6" />}
+              {showPassword ? (
+                <AiFillEye className="h-6 w-6" />
+              ) : (
+                <AiFillEyeInvisible className="h-6 w-6" />
+              )}
             </button>
           </div>
           <button
@@ -116,8 +112,11 @@ const Signin = () => {
             )}
           </button>
         </form>
-        <p className="mt-5">
-          Don't have an account? <Link to="/signup">Sign Up</Link>
+        <p className="mt-5 text-gray-600">
+          Don't have an account?{" "}
+          <Link to="/signup" className="text-blue-500">
+            Sign Up
+          </Link>
         </p>
         <p className="mt-2">
           <Link
