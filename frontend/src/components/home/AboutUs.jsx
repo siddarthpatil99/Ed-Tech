@@ -12,11 +12,10 @@ const AboutUs = () => {
     <>
       <div className="bg-gray-900 text-white min-h-screen flex flex-col">
         {/* Navigation Bar */}
-        
         <Navbar />
         {/* Main Content */}
         <div className="flex-grow p-8">
-          <div className="max-w-7xl mx-auto">
+          <div className="max-w-7xl mx-auto ">
             {/* Header Section */}
             <section className="text-center mb-12">
               <h1 className="text-5xl font-bold mb-4">About Us</h1>
