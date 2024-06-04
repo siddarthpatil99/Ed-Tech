@@ -227,7 +227,7 @@ const SignUp = () => {
           </button>
         </form>
         <p className="mt-5 text-white">
-          Don't have an account? <Link to="/signin">Sign In</Link>
+          Already have an account? <Link to="/signin">Sign In</Link>
         </p>
         <p className="mt-2">
           <Link
