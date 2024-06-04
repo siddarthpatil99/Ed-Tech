@@ -12,6 +12,7 @@ const AboutUs = () => {
     <>
       <div className="bg-gray-900 text-white min-h-screen flex flex-col">
         {/* Navigation Bar */}
+        
         <Navbar />
         {/* Main Content */}
         <div className="flex-grow p-8">
