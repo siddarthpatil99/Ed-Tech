@@ -6,6 +6,7 @@ export const SEND_OTP = `${API_BASEURL}/user/send-otp`;
 export const VERIFY_OTP = `${API_BASEURL}/user/verify-otp`;
 export const CURRENT_USER = `${API_BASEURL}/user/currentUser`;
 export const UPDATE_USER = `${API_BASEURL}/user/updateUser`;
+export const DELETE_ACCOUNT = `${API_BASEURL}/user/deleteAccount`;
 
 export const CREATE_COURSE = `${API_BASEURL}/course/create-course`;
 export const GET_COURSES = `${API_BASEURL}/course/get-courses`;

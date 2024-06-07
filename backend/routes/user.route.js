@@ -1,5 +1,12 @@
 import { Router } from "express";
-import { currentUser, signIn, signUp, updateUser, usersList } from "../controllers/user.controller.js";
+import {
+  currentUser,
+  deleteAccount,
+  signIn,
+  signUp,
+  updateUser,
+  usersList,
+} from "../controllers/user.controller.js";
 import { sendEmail, verifyOTP } from "../controllers/otp.controller.js";
 import { authMiddleware } from "../middlewares/auth.middleware.js";
 
@@ -15,5 +22,7 @@ router.put("/updateUser", authMiddleware, updateUser);
 
 router.get("/usersList", authMiddleware, usersList);
 router.get("/currentUser", authMiddleware, currentUser);
+
+router.delete("/deleteAccount", authMiddleware, deleteAccount);
 
 export default router;

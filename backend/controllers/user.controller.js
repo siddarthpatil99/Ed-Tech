@@ -1,4 +1,5 @@
 import { User } from "../models/user.model.js";
+import Course from "../models/course.model.js";
 import { userSchema, updateSchema } from "../zod/user.types.js";
 import { generateOTP, sendOTPEmail } from "../utils/otp.js";
 import jwt from "jsonwebtoken";
@@ -68,14 +69,12 @@ export const signIn = async (req, res) => {
       { expiresIn: process.env.JWT_EXPIRY }
     );
 
-    return res
-      .status(200)
-      .json({
-        message: "Login success",
-        token,
-        role: existingUser.role,
-        userId: existingUser._id,
-      });
+    return res.status(200).json({
+      message: "Login success",
+      token,
+      role: existingUser.role,
+      userId: existingUser._id,
+    });
   } catch (error) {
     return res
       .status(500)
@@ -163,6 +162,33 @@ export const usersList = async (req, res) => {
     console.log(users);
     const userNames = users.map((user) => ({ name: user.name }));
     res.json(userNames);
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Something went wrong", error: error, success: false });
+  }
+};
+
+export const deleteAccount = async (req, res) => {
+  const userId = req.user._id;
+
+  try {
+    const user = await User.findByIdAndDelete(userId);
+
+    if (!user) {
+      return res
+        .status(404)
+        .json({ message: "User not found", success: false });
+    }
+
+    if (user.role === "instructor") {
+      await Course.deleteMany({ instructorId: userId });
+    }
+
+    return res.status(200).json({
+      message: "Account and associated courses deleted successfully",
+      success: true,
+    });
   } catch (error) {
     return res
       .status(500)

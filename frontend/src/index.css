@@ -41,3 +41,43 @@ body {
 }
 
 
+
+/* custom-confirm-alert.css */
+.react-confirm-alert-overlay {
+  background: rgba(0, 0, 0, 0.75);
+}
+
+/* .react-confirm-alert {
+  background: #333;
+  border-radius: 8px;
+  padding: 20px;
+  color: #fff;
+  width: 400px;
+  max-width: 80%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+} */
+
+.react-confirm-alert .react-confirm-alert-button-group button {
+  background-color: #ff5555;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 10px;
+  transition: background-color 0.3s ease;
+}
+
+.react-confirm-alert .react-confirm-alert-button-group button:hover {
+  background-color: #ff4444;
+}
+
+.react-confirm-alert .react-confirm-alert-button-group button:nth-child(2) {
+  background-color: #555555;
+}
+
+.react-confirm-alert .react-confirm-alert-button-group button:nth-child(2):hover {
+  background-color: #444444;
+}
+
+

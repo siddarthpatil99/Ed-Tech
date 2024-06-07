@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { UPDATE_USER } from "../../apiConfig";
+import { UPDATE_USER, DELETE_ACCOUNT } from "../../apiConfig";
 import toast from "react-hot-toast";
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
 
 const StudentSettings = () => {
   const [formData, setFormData] = useState({
@@ -62,6 +64,40 @@ const StudentSettings = () => {
       }
     }
   };
+
+  const handleDeleteAccount = async () => {
+    confirmAlert({
+      title: "Confirm to delete",
+      message:
+        "Are you sure you want to delete your account?",
+      buttons: [
+        {
+          label: "Yes",
+          onClick: async () => {
+            try {
+              await axios.delete(DELETE_ACCOUNT, {
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem("lms-token")}`,
+                },
+              });
+              toast.success(
+                "Account deleted successfully!"
+              );
+              localStorage.removeItem("lms-token");
+              navigate("/signup");
+            } catch (error) {
+              console.error("Error deleting account: ", error);
+              toast.error("Failed to delete account");
+            }
+          },
+        },
+        {
+          label: "No",
+        },
+      ],
+    });
+  };
+
   return (
     <div className="h-full p-6 rounded-lg shadow-lg">
       <h1 className="text-3xl font-bold mb-4">Instructor Settings</h1>
@@ -130,6 +166,12 @@ const StudentSettings = () => {
           Save
         </button>
       </form>
+      <button
+        onClick={handleDeleteAccount}
+        className="mt-3 bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50 transition duration-300"
+      >
+        Delete Account
+      </button>
     </div>
   );
 };
