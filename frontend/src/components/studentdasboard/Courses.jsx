@@ -7,6 +7,8 @@ import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
+
+
 const Courses = () => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -57,7 +59,7 @@ const Courses = () => {
   }
 
   const handleViewCourse = (courseId) => {
-    navigate(`/studentpage/course/${courseId}`);
+    navigate(`/student/course/${courseId}`);
   };
 
   const filteredCourses = courses.filter((courses) =>

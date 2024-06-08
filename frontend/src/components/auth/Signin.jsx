@@ -37,9 +37,9 @@ const Signin = () => {
       setFormData({ email: "", password: "" });
 
       if (role === "student") {
-        navigate("/studentpage/profile");
+        navigate("/student/profile");
       } else if (role === "instructor") {
-        navigate("/instructorpage/profile");
+        navigate("/instructor/profile");
       } else {
         setError("Invalid role received from the server");
       }

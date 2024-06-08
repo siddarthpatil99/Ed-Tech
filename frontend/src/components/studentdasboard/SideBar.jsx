@@ -21,12 +21,12 @@ const SideBar = () => {
         </h2>
         <ul className="space-y-4 font-bold">
           <Link
-            to="/studentpage/profile"
+            to="/student/profile"
             className="block hover:cursor-pointer"
           >
             <li
               className={`flex px-2 py-4  items-center gap-x-2  hover:bg-gray-600 hover:rounded-md ${
-                pathname === "/studentpage/profile"
+                pathname === "/student/profile"
                   ? "bg-gray-600 rounded-md"
                   : ""
               }`}
@@ -37,12 +37,12 @@ const SideBar = () => {
           </Link>
 
           <Link
-            to="/studentpage/courses"
+            to="/student/courses"
             className="block hover:cursor-pointer"
           >
             <li
               className={`flex px-2 py-4  items-center gap-x-2 hover:bg-gray-600 hover:rounded-md ${
-                pathname === "/studentpage/courses"
+                pathname === "/student/courses"
                   ? "bg-gray-600 rounded-md"
                   : ""
               }`}
@@ -53,12 +53,12 @@ const SideBar = () => {
           </Link>
 
           <Link
-            to="/studentpage/favourites"
+            to="/student/favourites"
             className="block hover:cursor-pointer"
           >
             <li
               className={`flex px-2 py-4  items-center gap-x-2 hover:bg-gray-600 hover:rounded-md ${
-                pathname === "/studentpage/favourites"
+                pathname === "/student/favourites"
                   ? "bg-gray-600 rounded-md"
                   : ""
               }`}
@@ -69,12 +69,12 @@ const SideBar = () => {
             </li>
           </Link>
           <Link
-            to="/studentpage/settings"
+            to="/student/settings"
             className="block hover:cursor-pointer"
           >
             <li
               className={`flex px-2 py-4  items-center gap-x-2 hover:bg-gray-600 hover:rounded-md ${
-                pathname === "/studentpage/settings"
+                pathname === "/student/settings"
                   ? "bg-gray-600 rounded-md"
                   : ""
               }`}
@@ -88,7 +88,7 @@ const SideBar = () => {
         <div className="absolute bottom-6 px-2">
           <button
             onClick={logout}
-            className=" text-white px-4 py-2 rounded-md  bg-red-400 hover:bg-red-500"
+            className=" text-white px-4 py-2 rounded-md  bg-red-500 hover:bg-red-600"
           >
             Logout
           </button>

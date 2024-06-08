@@ -68,8 +68,7 @@ const InstructorSettings = () => {
   const handleDeleteAccount = async () => {
     confirmAlert({
       title: "Confirm to delete",
-      message:
-        "Are you sure you want to delete your account?",
+      message: "Are you sure you want to delete your account?",
       buttons: [
         {
           label: "Yes",
@@ -101,7 +100,15 @@ const InstructorSettings = () => {
   return (
     <>
       <div className="h-full p-6 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold mb-4">Instructor Settings</h1>
+        <div className="flex justify-between">
+          <h1 className="text-3xl font-bold mb-4">Settings</h1>
+          <button
+            onClick={handleDeleteAccount}
+            className="mb-3 bg-red-500 text-white px-2 py-2 text-sm rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50 transition duration-300"
+          >
+            Delete Account
+          </button>
+        </div>
         <form onSubmit={handleSubmit} className="bg-gray-700 p-4 rounded-lg">
           {error && <p className="text-red-500">{error}</p>}
           {success && <p className="text-green-500">{success}</p>}
@@ -168,17 +175,11 @@ const InstructorSettings = () => {
           </div>
           <button
             type="submit"
-            className="bg-green-500 text-white px-4 py-2 rounded-md"
+            className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md"
           >
             Save
           </button>
         </form>
-        <button
-          onClick={handleDeleteAccount}
-          className="mt-3 bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50 transition duration-300"
-        >
-          Delete Account
-        </button>
       </div>
     </>
   );

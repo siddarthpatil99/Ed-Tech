@@ -34,13 +34,13 @@ function App() {
             <Route path="/signup" element={<SignUp />} />
             <Route path="/signin" element={<Signin />} />
             <Route element={<ProtectedRoute />}>
-              <Route path="/instructorpage/*" element={<InstructorPage />}>
+              <Route path="/instructor/*" element={<InstructorPage />}>
                 <Route path="profile" element={<MyProfile />} />
                 <Route path="manage-courses" element={<ManageCourses />} />
                 <Route path="add-course" element={<AddCourse />} />
                 <Route path="settings" element={<InstructorSettings />} />
               </Route>
-              <Route path="/studentpage/*" element={<StudentPage />}>
+              <Route path="/student/*" element={<StudentPage />}>
                 <Route path="profile" element={<StudentProfile />} />
                 <Route path="courses" element={<Courses />} />
                 <Route path="course/:id" element={<CourseDetails />} />

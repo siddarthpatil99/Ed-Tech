@@ -40,7 +40,7 @@ const StudentProfile = () => {
     }, []);
 
     const handleEditClick = () => {
-      navigate("/studentpage/settings");
+      navigate("/student/settings");
       console.log("Edit button clicked");
     };
 

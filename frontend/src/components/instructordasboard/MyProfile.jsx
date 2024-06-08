@@ -38,7 +38,7 @@ const MyProfile = () => {
   }, []);
 
   const handleEditClick = () => {
-    navigate("/instructorpage/settings"); 
+    navigate("/instructor/settings"); 
     console.log("Edit button clicked");
   };
 
